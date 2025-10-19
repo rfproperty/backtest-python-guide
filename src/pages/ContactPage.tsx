@@ -58,15 +58,15 @@ export default function ContactPage({ user }: ContactPageProps) {
   };
 
   return (
-    <div style={{ maxWidth: 640, margin: '48px auto', background: '#f9fafb', borderRadius: 20, padding: 32 }}>
-      <h1 style={{ fontSize: 32, fontWeight: 700, color: '#111827', marginBottom: 12 }}>Contact Us</h1>
-      <p style={{ color: '#4b5563', marginBottom: 24 }}>
-        Have questions about BacktestAI? Leave us a message and we’ll get back to you in one business day.
+    <div className="max-w-2xl mx-auto my-12 bg-muted rounded-2xl p-8 animate-fade-in">
+      <h1 className="text-3xl font-bold text-foreground mb-3">Contact Us</h1>
+      <p className="text-muted-foreground mb-6">
+        Have questions about BacktestAI? Leave us a message and we'll get back to you in one business day.
       </p>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }} htmlFor="name">
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#1f2937' }}>Your Name</span>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <label className="flex flex-col gap-2" htmlFor="name">
+          <span className="text-sm font-semibold text-foreground">Your Name</span>
           <input
             id="name"
             name="name"
@@ -74,17 +74,12 @@ export default function ContactPage({ user }: ContactPageProps) {
             required
             value={form.name}
             onChange={handleChange}
-            style={{
-              borderRadius: 12,
-              border: '1px solid #d1d5db',
-              padding: '10px 14px',
-              fontSize: 15
-            }}
+            className="rounded-xl border border-input bg-background px-4 py-3 text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
           />
         </label>
 
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }} htmlFor="email">
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#1f2937' }}>Email</span>
+        <label className="flex flex-col gap-2" htmlFor="email">
+          <span className="text-sm font-semibold text-foreground">Email</span>
           <input
             id="email"
             name="email"
@@ -92,17 +87,12 @@ export default function ContactPage({ user }: ContactPageProps) {
             required
             value={form.email}
             onChange={handleChange}
-            style={{
-              borderRadius: 12,
-              border: '1px solid #d1d5db',
-              padding: '10px 14px',
-              fontSize: 15
-            }}
+            className="rounded-xl border border-input bg-background px-4 py-3 text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
           />
         </label>
 
-        <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }} htmlFor="message">
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#1f2937' }}>Message</span>
+        <label className="flex flex-col gap-2" htmlFor="message">
+          <span className="text-sm font-semibold text-foreground">Message</span>
           <textarea
             id="message"
             name="message"
@@ -110,39 +100,24 @@ export default function ContactPage({ user }: ContactPageProps) {
             required
             value={form.message}
             onChange={handleChange}
-            style={{
-              borderRadius: 12,
-              border: '1px solid #d1d5db',
-              padding: '10px 14px',
-              fontSize: 15,
-              resize: 'vertical'
-            }}
+            className="rounded-xl border border-input bg-background px-4 py-3 text-foreground resize-vertical focus:ring-2 focus:ring-ring focus:outline-none transition-all"
           />
         </label>
 
         <button
           type="submit"
           disabled={status === 'submitting'}
-          style={{
-            border: 'none',
-            borderRadius: 12,
-            background: '#2563eb',
-            color: '#fff',
-            padding: '12px 16px',
-            fontSize: 15,
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}
+          className="bg-gradient-primary text-primary-foreground px-4 py-3 rounded-xl font-semibold hover:shadow-glow transition-all disabled:opacity-70"
         >
           {status === 'submitting' ? 'Sending…' : 'Send message'}
         </button>
       </form>
 
       {status === 'success' && (
-        <p style={{ marginTop: 16, color: '#047857', fontWeight: 600 }}>Thanks! We received your message.</p>
+        <p className="mt-4 text-success font-semibold">Thanks! We received your message.</p>
       )}
       {status === 'error' && error && (
-        <p style={{ marginTop: 16, color: '#b91c1c', fontWeight: 600 }}>{error}</p>
+        <p className="mt-4 text-destructive font-semibold">{error}</p>
       )}
     </div>
   );

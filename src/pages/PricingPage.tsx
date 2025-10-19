@@ -117,27 +117,21 @@ export default function PricingPage({ user }: PricingPageProps) {
   }, [navigate, user]);
 
   if (loading) {
-    return <div style={{ color: '#6b7280' }}>Loading pricing…</div>;
+    return <div className="text-muted-foreground text-center py-8">Loading pricing…</div>;
   }
 
   if (error) {
-    return <div style={{ color: '#b91c1c' }}>{error}</div>;
+    return <div className="text-destructive text-center py-8">{error}</div>;
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <header style={{ textAlign: 'center' }}>
-        <h1 style={{ margin: 0, fontSize: 32, color: '#0f172a' }}>Pricing that scales with you</h1>
-        <p style={{ marginTop: 8, color: '#64748b' }}>Start free. Upgrade for intraday data, exports, and higher limits.</p>
+    <div className="flex flex-col gap-8">
+      <header className="text-center">
+        <h1 className="text-4xl font-bold text-foreground">Pricing that scales with you</h1>
+        <p className="mt-2 text-muted-foreground">Start free. Upgrade for intraday data, exports, and higher limits.</p>
       </header>
 
-      <div
-        style={{
-          display: 'grid',
-          gap: 20,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))'
-        }}
-      >
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {plans.map((plan) => {
           const isCurrentPlan = currentSubscription.toLowerCase() === plan.id.toLowerCase();
           const isFree = plan.id === 'free';
@@ -147,65 +141,46 @@ export default function PricingPage({ user }: PricingPageProps) {
           return (
             <div
               key={plan.id}
-              style={{
-                background: '#ffffff',
-                borderRadius: 20,
-                border: plan.is_popular ? '2px solid #2563eb' : '1px solid #e2e8f0',
-                padding: 24,
-                boxShadow: plan.is_popular ? '0 20px 45px -20px rgba(37, 99, 235, 0.35)' : 'none'
-              }}
+              className={`bg-card rounded-2xl border p-6 transition-all hover:shadow-lg ${
+                plan.is_popular
+                  ? 'border-primary shadow-glow scale-105'
+                  : 'border-border'
+              }`}
             >
               {plan.is_popular && (
-                <span
-                  style={{
-                    display: 'inline-block',
-                    background: '#2563eb',
-                    color: '#fff',
-                    fontSize: 12,
-                    fontWeight: 600,
-                    padding: '4px 10px',
-                    borderRadius: 999,
-                    marginBottom: 12
-                  }}
-                >
+                <span className="inline-block bg-gradient-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full mb-3">
                   Most popular
                 </span>
               )}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <h2 style={{ margin: 0, fontSize: 22, color: '#111827' }}>{plan.name}</h2>
+              <div className="flex justify-between items-baseline">
+                <h2 className="text-2xl font-bold text-foreground">{plan.name}</h2>
                 {plan.price > 0 ? (
-                  <div style={{ fontSize: 26, fontWeight: 700, color: '#111827' }}>
+                  <div className="text-3xl font-bold text-foreground">
                     ${plan.price}
-                    <span style={{ fontSize: 14, color: '#64748b', fontWeight: 500 }}>/mo</span>
+                    <span className="text-sm text-muted-foreground font-medium">/mo</span>
                   </div>
                 ) : (
-                  <div style={{ fontSize: 20, fontWeight: 600, color: '#111827' }}>
+                  <div className="text-xl font-semibold text-foreground">
                     {isEnterprise ? 'Custom' : '$0/mo'}
                   </div>
                 )}
               </div>
-              <p style={{ marginTop: 10, color: '#4b5563', minHeight: 48 }}>{plan.description}</p>
-              <ul style={{ marginTop: 16, paddingLeft: 20, color: '#1f2937', lineHeight: 1.6 }}>
+              <p className="mt-3 text-muted-foreground min-h-[3rem]">{plan.description}</p>
+              <ul className="mt-4 space-y-2 text-foreground">
                 {plan.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
+                  <li key={feature} className="flex items-start">
+                    <span className="mr-2 text-primary">✓</span>
+                    <span>{feature}</span>
+                  </li>
                 ))}
               </ul>
 
-              <div style={{ marginTop: 20 }}>
+              <div className="mt-6">
                 {isEnterprise ? (
                   <button
                     type="button"
                     onClick={() => window.open('mailto:hello@backtest.ai', '_blank')}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      borderRadius: 12,
-                      border: '1px solid #cbd5f5',
-                      background: '#f8fafc',
-                      color: '#1d4ed8',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
+                    className="w-full px-4 py-3 rounded-xl border border-primary bg-primary-light text-primary font-semibold hover:bg-primary/10 transition-all"
                   >
                     Contact sales
                   </button>
@@ -213,16 +188,7 @@ export default function PricingPage({ user }: PricingPageProps) {
                   <button
                     type="button"
                     onClick={() => (user ? navigate('/dashboard') : navigate('/signup'))}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      borderRadius: 12,
-                      border: '1px solid #cbd5f5',
-                      background: '#f8fafc',
-                      color: '#1d4ed8',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
+                    className="w-full px-4 py-3 rounded-xl border border-primary bg-primary-light text-primary font-semibold hover:bg-primary/10 transition-all"
                   >
                     {user ? 'Go to dashboard' : 'Start for free'}
                   </button>
@@ -230,16 +196,7 @@ export default function PricingPage({ user }: PricingPageProps) {
                   <button
                     type="button"
                     onClick={handleManageBilling}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      borderRadius: 12,
-                      border: '1px solid #34d399',
-                      background: '#d1fae5',
-                      color: '#047857',
-                      fontWeight: 600,
-                      cursor: 'pointer'
-                    }}
+                    className="w-full px-4 py-3 rounded-xl border border-success bg-success-light text-success-foreground font-semibold hover:bg-success/10 transition-all"
                   >
                     Manage billing
                   </button>
@@ -248,17 +205,7 @@ export default function PricingPage({ user }: PricingPageProps) {
                     type="button"
                     onClick={handleUpgrade}
                     disabled={processing}
-                    style={{
-                      width: '100%',
-                      padding: '12px 16px',
-                      borderRadius: 12,
-                      border: 'none',
-                      background: '#2563eb',
-                      color: '#fff',
-                      fontWeight: 600,
-                      cursor: 'pointer',
-                      opacity: processing ? 0.8 : 1
-                    }}
+                    className="w-full px-4 py-3 rounded-xl bg-gradient-primary text-primary-foreground font-semibold hover:shadow-glow transition-all disabled:opacity-70"
                   >
                     Upgrade to Pro
                   </button>
@@ -270,7 +217,7 @@ export default function PricingPage({ user }: PricingPageProps) {
       </div>
 
       {actionMessage && (
-        <div style={{ color: '#b91c1c', textAlign: 'center' }}>{actionMessage}</div>
+        <div className="text-destructive text-center font-semibold">{actionMessage}</div>
       )}
     </div>
   );

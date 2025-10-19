@@ -81,54 +81,40 @@ export default function DashboardPage({ user }: DashboardPageProps) {
   );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="flex flex-col gap-6">
+      <header className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h1 style={{ margin: 0, fontSize: 28, color: '#111827' }}>Your Backtests</h1>
-          <p style={{ margin: '4px 0 0', color: '#6b7280' }}>Manage and monitor every run powered by Backtest AI.</p>
+          <h1 className="text-3xl font-bold text-foreground">Your Backtests</h1>
+          <p className="mt-1 text-muted-foreground">Manage and monitor every run powered by Backtest AI.</p>
         </div>
         <button
           type="button"
-          style={{
-            background: '#2563eb',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 12,
-            padding: '12px 18px',
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}
+          className="bg-gradient-primary text-primary-foreground px-5 py-3 rounded-xl font-semibold hover:shadow-glow transition-all"
           onClick={() => navigate('/submit_backtest')}
         >
           🚀 New Backtest
         </button>
       </header>
 
-      <section
-        style={{
-          display: 'grid',
-          gap: 16,
-          gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))'
-        }}
-      >
-        <div style={{ background: '#eff6ff', padding: 16, borderRadius: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 14, color: '#1d4ed8', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+      <section className="grid gap-4 grid-cols-1 md:grid-cols-3">
+        <div className="bg-primary-light p-4 rounded-xl border border-primary/20">
+          <h3 className="text-xs font-bold text-primary uppercase tracking-wider">
             Latest Return
           </h3>
-          <p style={{ margin: '12px 0 0', fontSize: 24, fontWeight: 700 }}>{formatPercent(summary.latest_pnl)}</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{formatPercent(summary.latest_pnl)}</p>
         </div>
-        <div style={{ background: '#ecfdf5', padding: 16, borderRadius: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 14, color: '#047857', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+        <div className="bg-success-light p-4 rounded-xl border border-success/20">
+          <h3 className="text-xs font-bold text-success uppercase tracking-wider">
             Latest Win Rate
           </h3>
-          <p style={{ margin: '12px 0 0', fontSize: 24, fontWeight: 700 }}>{formatPercent(summary.latest_win)}</p>
+          <p className="mt-3 text-2xl font-bold text-foreground">{formatPercent(summary.latest_win)}</p>
         </div>
-        <div style={{ background: '#fef3c7', padding: 16, borderRadius: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 14, color: '#b45309', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+        <div className="bg-warning-light p-4 rounded-xl border border-warning/20">
+          <h3 className="text-xs font-bold text-warning uppercase tracking-wider">
             Active Backtests
           </h3>
-          <p style={{ margin: '12px 0 0', fontSize: 24, fontWeight: 700 }}>{summary.count_total}</p>
-          <p style={{ margin: '4px 0 0', color: '#92400e', fontSize: 12 }}>
+          <p className="mt-3 text-2xl font-bold text-foreground">{summary.count_total}</p>
+          <p className="mt-1 text-warning-foreground text-xs">
             {summary.count_completed} completed · {summary.count_pending} pending · {summary.count_failed} failed
           </p>
         </div>
@@ -136,25 +122,19 @@ export default function DashboardPage({ user }: DashboardPageProps) {
 
       <form
         onSubmit={handleSubmit}
-        style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}
+        className="flex flex-wrap gap-3 items-center"
       >
         <input
           type="text"
           placeholder="Search by name"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          style={{
-            flex: 1,
-            minWidth: 220,
-            padding: '10px 14px',
-            borderRadius: 10,
-            border: '1px solid #d1d5db'
-          }}
+          className="flex-1 min-w-[220px] px-4 py-2.5 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
         />
         <select
           value={status}
           onChange={(event) => setStatus(event.target.value as BacktestStatus | 'all')}
-          style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid #d1d5db' }}
+          className="px-4 py-2.5 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
         >
           {STATUS_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
@@ -164,107 +144,70 @@ export default function DashboardPage({ user }: DashboardPageProps) {
         </select>
         <button
           type="submit"
-          style={{
-            padding: '10px 16px',
-            background: '#111827',
-            color: '#fff',
-            borderRadius: 10,
-            border: 'none',
-            fontWeight: 600,
-            cursor: 'pointer'
-          }}
+          className="px-4 py-2.5 bg-foreground text-background rounded-lg font-semibold hover:opacity-90 transition-all"
         >
           Apply
         </button>
       </form>
 
       {loading ? (
-        <div style={{ padding: 32, textAlign: 'center', color: '#6b7280' }}>Loading backtests…</div>
+        <div className="py-8 text-center text-muted-foreground">Loading backtests…</div>
       ) : error ? (
-        <div style={{ padding: 16, borderRadius: 12, background: '#fee2e2', color: '#991b1b' }}>{error}</div>
+        <div className="p-4 rounded-xl bg-destructive-light text-destructive border border-destructive/20">{error}</div>
       ) : items.length === 0 ? (
-        <div
-          style={{
-            padding: 32,
-            border: '1px dashed #cbd5f5',
-            borderRadius: 16,
-            textAlign: 'center',
-            background: '#f8fafc'
-          }}
-        >
-          <div style={{ fontSize: 32, marginBottom: 8 }}>🚀</div>
-          <h2 style={{ margin: '0 0 8px', fontSize: 20, color: '#111827' }}>No backtests yet</h2>
-          <p style={{ margin: 0, color: '#6b7280' }}>Kick off your first run in under a minute.</p>
+        <div className="py-8 border-2 border-dashed border-border rounded-2xl text-center bg-muted">
+          <div className="text-4xl mb-2">🚀</div>
+          <h2 className="text-xl font-semibold text-foreground mb-2">No backtests yet</h2>
+          <p className="text-muted-foreground mb-4">Kick off your first run in under a minute.</p>
           <button
             type="button"
             onClick={() => navigate('/submit_backtest')}
-            style={{
-              marginTop: 16,
-              padding: '10px 18px',
-              borderRadius: 10,
-              border: 'none',
-              background: '#2563eb',
-              color: '#fff',
-              fontWeight: 600,
-              cursor: 'pointer'
-            }}
+            className="px-5 py-2.5 rounded-lg bg-gradient-primary text-primary-foreground font-semibold hover:shadow-glow transition-all"
           >
             Start Backtest
           </button>
         </div>
       ) : (
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <div className="overflow-x-auto rounded-xl border border-border">
+          <table className="w-full border-collapse">
             <thead>
-              <tr style={{ textAlign: 'left', color: '#6b7280', fontSize: 13 }}>
-                <th style={{ padding: '12px 16px' }}>Backtest</th>
-                <th style={{ padding: '12px 16px' }}>Created</th>
-                <th style={{ padding: '12px 16px' }}>Status</th>
-                <th style={{ padding: '12px 16px' }}>Results</th>
+              <tr className="text-left text-muted-foreground text-sm bg-muted/50">
+                <th className="py-3 px-4 font-semibold">Backtest</th>
+                <th className="py-3 px-4 font-semibold">Created</th>
+                <th className="py-3 px-4 font-semibold">Status</th>
+                <th className="py-3 px-4 font-semibold">Results</th>
               </tr>
             </thead>
             <tbody>
               {items.map((item) => (
-                <tr key={item.id} style={{ borderTop: '1px solid #e5e7eb' }}>
-                  <td style={{ padding: '16px', fontWeight: 600, color: '#111827' }}>
+                <tr key={item.id} className="border-t border-border hover:bg-muted/30 transition-colors">
+                  <td className="py-4 px-4 font-semibold text-foreground">
                     {item.backtest_name ?? `Backtest #${item.id}`}
                   </td>
-                  <td style={{ padding: '16px', color: '#4b5563' }}>{formatDate(item.created_at)}</td>
-                  <td style={{ padding: '16px' }}>
+                  <td className="py-4 px-4 text-muted-foreground">{formatDate(item.created_at)}</td>
+                  <td className="py-4 px-4">
                     <span
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: 999,
-                        background:
-                          item.status === 'completed'
-                            ? '#dcfce7'
-                            : item.status === 'failed'
-                            ? '#fee2e2'
-                            : '#e0e7ff',
-                        color:
-                          item.status === 'completed'
-                            ? '#166534'
-                            : item.status === 'failed'
-                            ? '#b91c1c'
-                            : '#312e81',
-                        fontWeight: 600,
-                        fontSize: 12,
-                        textTransform: 'capitalize'
-                      }}
+                      className={`px-3 py-1 rounded-full font-semibold text-xs capitalize ${
+                        item.status === 'completed'
+                          ? 'bg-success-light text-success-foreground'
+                          : item.status === 'failed'
+                          ? 'bg-destructive-light text-destructive'
+                          : 'bg-primary-light text-primary'
+                      }`}
                     >
                       {item.status}
                     </span>
                   </td>
-                  <td style={{ padding: '16px' }}>
+                  <td className="py-4 px-4">
                     {item.status === 'completed' ? (
                       <a
                         href={`/backtests/${item.id}`}
-                        style={{ color: '#2563eb', fontWeight: 600, textDecoration: 'none' }}
+                        className="text-primary font-semibold hover:text-primary-glow transition-colors"
                       >
                         View results →
                       </a>
                     ) : (
-                      <span style={{ color: '#9ca3af' }}>Results unavailable</span>
+                      <span className="text-muted-foreground">Results unavailable</span>
                     )}
                   </td>
                 </tr>

@@ -36,95 +36,63 @@ export default function LoginPage({ onSuccess }: LoginPageProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div>
-        <h1 style={{ margin: 0, fontSize: 28, color: '#1f2937' }}>Log in</h1>
-        <p style={{ margin: '8px 0 0', color: '#6b7280' }}>Access your BacktestAI account.</p>
+        <h1 className="text-3xl font-bold text-foreground">Log in</h1>
+        <p className="mt-2 text-muted-foreground">Access your BacktestAI account.</p>
       </div>
       <button
         type="button"
         onClick={handleGoogleLogin}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 10,
-          padding: '12px 16px',
-          borderRadius: 10,
-          border: '1px solid #d1d5db',
-          background: '#ffffff',
-          fontSize: 15,
-          fontWeight: 600,
-          cursor: 'pointer'
-        }}
+        className="flex items-center justify-center gap-3 px-4 py-3 rounded-xl border border-border bg-card text-foreground font-semibold hover:bg-muted transition-all"
       >
         <img
           src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
           alt="Google logo"
-          style={{ width: 18, height: 18 }}
+          className="w-5 h-5"
         />
         Continue with Google
       </button>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <div style={{ flex: 1, height: 1, background: '#e5e7eb' }} />
-        <span style={{ color: '#6b7280', fontSize: 12 }}>or</span>
-        <div style={{ flex: 1, height: 1, background: '#e5e7eb' }} />
+      <div className="flex items-center gap-3">
+        <div className="flex-1 h-px bg-border" />
+        <span className="text-muted-foreground text-xs">or</span>
+        <div className="flex-1 h-px bg-border" />
       </div>
-      <label style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 14 }}>
+      <label className="flex flex-col gap-2 text-sm font-medium">
         Email
         <input
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           required
-          style={{
-            padding: '12px 14px',
-            borderRadius: 8,
-            border: '1px solid #cbd5f5',
-            fontSize: 14
-          }}
+          className="px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
         />
       </label>
-      <label style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 14 }}>
+      <label className="flex flex-col gap-2 text-sm font-medium">
         Password
         <input
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           required
-          style={{
-            padding: '12px 14px',
-            borderRadius: 8,
-            border: '1px solid #cbd5f5',
-            fontSize: 14
-          }}
+          className="px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-ring focus:outline-none transition-all"
         />
       </label>
       {error && (
-        <p style={{ color: '#dc2626', margin: 0, fontSize: 14 }}>
+        <p className="text-destructive text-sm font-medium">
           {error}
         </p>
       )}
       <button
         type="submit"
         disabled={loading}
-        style={{
-          border: 'none',
-          background: '#2563eb',
-          color: '#fff',
-          padding: '12px 16px',
-          borderRadius: 8,
-          fontSize: 16,
-          fontWeight: 600,
-          cursor: 'pointer',
-          opacity: loading ? 0.7 : 1
-        }}
+        className="bg-gradient-primary text-primary-foreground px-4 py-3 rounded-lg text-base font-semibold hover:shadow-glow transition-all disabled:opacity-70"
       >
         {loading ? 'Signing in…' : 'Log in'}
       </button>
-      <p style={{ fontSize: 14, color: '#4b5563', margin: 0 }}>
+      <p className="text-sm text-muted-foreground">
         No account yet?{' '}
-        <Link to="/signup" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 600 }}>
+        <Link to="/signup" className="text-primary font-semibold hover:text-primary-glow transition-colors">
           Create one
         </Link>
       </p>

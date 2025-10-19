@@ -11,68 +11,50 @@ interface LayoutProps {
 
 export default function Layout({ user, onLogout, children }: LayoutProps) {
   return (
-    <div style={{ width: '100%', maxWidth: 640, padding: '48px 32px' }}>
-      <header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: 32
-        }}
-      >
-        <Link to="/" style={{ textDecoration: 'none', color: '#111827', fontSize: 24, fontWeight: 600 }}>
+    <div className="w-full max-w-4xl px-8 py-12 mx-auto animate-fade-in">
+      <header className="flex justify-between items-center mb-8 flex-wrap gap-4">
+        <Link 
+          to="/" 
+          className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+        >
           BacktestAI
         </Link>
-        <nav style={{ display: 'flex', gap: 16, alignItems: 'center', fontSize: 14 }}>
-          <Link to="/pricing" style={{ color: '#111827', textDecoration: 'none', fontWeight: 500 }}>
+        <nav className="flex gap-6 items-center text-sm flex-wrap">
+          <Link to="/pricing" className="font-medium text-foreground hover:text-primary transition-colors">
             Pricing
           </Link>
-          <Link to="/contact" style={{ color: '#111827', textDecoration: 'none', fontWeight: 500 }}>
+          <Link to="/contact" className="font-medium text-foreground hover:text-primary transition-colors">
             Contact
           </Link>
           {user ? (
             <>
-              <Link to="/dashboard" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+              <Link to="/dashboard" className="font-medium text-primary hover:text-primary-glow transition-colors">
                 Dashboard
               </Link>
-              <Link to="/account" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+              <Link to="/account" className="font-medium text-primary hover:text-primary-glow transition-colors">
                 Account
               </Link>
               {user.email.toLowerCase() === ADMIN_EMAIL && (
-                <Link to="/admin/train_ai" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+                <Link to="/admin/train_ai" className="font-medium text-primary hover:text-primary-glow transition-colors">
                   Admin AI
                 </Link>
               )}
-              <span style={{ color: '#4b5563' }}>{user.email}</span>
+              <span className="text-muted-foreground text-xs">{user.email}</span>
               <button
                 onClick={onLogout}
-                style={{
-                  border: 'none',
-                  background: '#ef4444',
-                  color: '#fff',
-                  padding: '8px 14px',
-                  borderRadius: 8,
-                  cursor: 'pointer'
-                }}
+                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground px-4 py-2 rounded-lg font-semibold transition-all hover:shadow-lg"
               >
                 Log out
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+              <Link to="/login" className="font-medium text-primary hover:text-primary-glow transition-colors">
                 Login
               </Link>
               <Link
                 to="/signup"
-                style={{
-                  color: '#fff',
-                  background: '#2563eb',
-                  textDecoration: 'none',
-                  padding: '8px 14px',
-                  borderRadius: 8,
-                  fontWeight: 500
-                }}
+                className="bg-gradient-primary text-primary-foreground px-4 py-2 rounded-lg font-semibold hover:shadow-glow transition-all"
               >
                 Sign up
               </Link>
@@ -80,14 +62,7 @@ export default function Layout({ user, onLogout, children }: LayoutProps) {
           )}
         </nav>
       </header>
-      <main
-        style={{
-          background: '#fff',
-          padding: '32px',
-          borderRadius: 16,
-          boxShadow: '0 25px 50px -12px rgba(30, 64, 175, 0.15)'
-        }}
-      >
+      <main className="bg-card rounded-2xl p-8 shadow-xl border border-border">
         {children}
       </main>
     </div>
