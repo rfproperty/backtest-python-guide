@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
-import { ADMIN_EMAIL } from '../config';
-import type { User } from '../types';
+import { ADMIN_EMAIL } from '@/config';
+import type { User } from '@/types';
 
 interface LayoutProps {
   user: User | null;
